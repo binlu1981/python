@@ -45,11 +45,32 @@ class Solution(object):
             return len(substringlist[0])
 
 
+			
+class Solution1(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        new_str = ''
+        max = 0
+        for ch in s:
+            if not ch in new_str:
+                new_str += ch
+            else:
+                max = len(new_str) if len(new_str) > max else max
+                idx = new_str.find(ch)
+                new_str = new_str[idx+1:] + ch
+        max = len(new_str) if len(new_str) > max else max
+        return max			
+			
+			
+			
 a="abcabcbb"
 b="pwwkew"
 c=""
 d="ngvzdvhwkcgcpljnsatlvuhhkqlfcakpihqlexhocptracgvcz"
-s=Solution()
+s=Solution1()
 print s.lengthOfLongestSubstring(a)
 print s.lengthOfLongestSubstring(d)
 print s.lengthOfLongestSubstring(c)
