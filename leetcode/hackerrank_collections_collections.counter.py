@@ -366,3 +366,272 @@ for _ in range(int(input())):
     dic[item_name] = int(price)
 for n, p in dic.items():
     print(n,p*Counter(itemcounter)[n])
+	
+	
+	
+	
+"""
+Word Order
+You are given  words. Some words may repeat. For each word, output its number of occurrences. The output order should correspond with the input order of appearance of the word. See the sample input/output for clarification.
+
+Note: Each input line ends with a "\n" character.
+
+Constraints: 
+ 
+The sum of the lengths of all the words do not exceed  
+All the words are composed of lowercase English letters only.
+
+Input Format
+
+The first line contains the integer, . 
+The next  lines each contain a word.
+
+Output Format
+
+Output  lines. 
+On the first line, output the number of distinct words from the input. 
+On the second line, output the number of occurrences for each distinct word according to their appearance in the input.
+
+Sample Input
+
+4
+bcdef
+abcdefg
+bcde
+bcdef
+Sample Output
+
+3
+2 1 1
+Explanation
+
+There are  distinct words. Here, "bcdef" appears twice in the input at the first and last positions. The other words appear once each. The order of the first appearances are "bcdef", "abcdefg" and "bcde" which corresponds to the output.
+"""
+	
+from collections import Counter
+lst = []
+for _ in range(int(input())):
+    lst.append(input().strip())
+dic = Counter(lst)
+print(len(dic))
+for n in lst:
+    k = dic.pop(n,None)
+    if k == None:
+        continue
+    else:
+        print(k, end =" ")
+		
+from collections import OrderedDict
+dic = OrderedDict()
+for _ in range(int(input())):
+    word = input().strip()
+    dic[word] = dic.get(word,0) + 1
+print(len(dic))
+print(*dic.values())	
+
+
+from collections import Counter, OrderedDict
+class OrderedCounter(Counter, OrderedDict):
+    pass
+d = OrderedCounter(input() for _ in range(int(input())))
+print(len(d))
+print(*d.values())	
+
+
+
+"""
+collections.deque()
+
+A deque is a double-ended queue. It can be used to add or remove elements from both ends.
+
+Deques support thread safe, memory efficient appends and pops from either side of the deque with approximately the same  performance in either direction.
+
+Click on the link to learn more about deque() methods. 
+Click on the link to learn more about various approaches to working with deques: Deque Recipes.
+
+Example
+
+Code
+
+>>> from collections import deque
+>>> d = deque()
+>>> d.append(1)
+>>> print d
+deque([1])
+>>> d.appendleft(2)
+>>> print d
+deque([2, 1])
+>>> d.clear()
+>>> print d
+deque([])
+>>> d.extend('1')
+>>> print d
+deque(['1'])
+>>> d.extendleft('234')
+>>> print d
+deque(['4', '3', '2', '1'])
+>>> d.count('1')
+1
+>>> d.pop()
+'1'
+>>> print d
+deque(['4', '3', '2'])
+>>> d.popleft()
+'4'
+>>> print d
+deque(['3', '2'])
+>>> d.extend('7896')
+>>> print d
+deque(['3', '2', '7', '8', '9', '6'])
+>>> d.remove('2')
+>>> print d
+deque(['3', '7', '8', '9', '6'])
+>>> d.reverse()
+>>> print d
+deque(['6', '9', '8', '7', '3'])
+>>> d.rotate(3)
+>>> print d
+deque(['8', '7', '3', '6', '9'])
+Task
+
+Perform append, pop, popleft and appendleft methods on an empty deque .
+
+Input Format
+
+The first line contains an integer , the number of operations. 
+The next  lines contains the space separated names of methods and their values.
+
+Constraints
+
+
+Output Format
+
+Print the space separated elements of deque .
+
+Sample Input
+
+6
+append 1
+append 2
+append 3
+appendleft 4
+pop
+popleft
+Sample Output
+
+1 2
+"""
+from collections import deque
+lst = deque()
+for _ in range(int(input())):
+    eval("lst.{0}({1})".format(*(input().split()+[" "])))
+print(*lst)
+
+
+from collections import deque
+lst = deque()
+for _ in range(int(input())):
+    cmd,*args = input().split()
+#	cmd = input().split()
+    getattr(lst, cmd)(*args)
+#	getattr(lst, cmd[0])(*[cmd[1]] if len(cmd) > 1 else [])
+print(*lst)
+"""
+Piling Up!
+There is a horizontal row of  cubes. The length of each cube is given. You need to create a new vertical pile of cubes. The new pile should follow these directions: if  is on top of  then .
+
+When stacking the cubes, you can only pick up either the leftmost or the rightmost cube each time. Print "Yes" if it is possible to stack the cubes. Otherwise, print "No". Do not print the quotation marks.
+
+Input Format
+
+The first line contains a single integer , the number of test cases. 
+For each test case, there are  lines. 
+The first line of each test case contains , the number of cubes. 
+The second line contains  space separated integers, denoting the sideLengths of each cube in that order.
+
+Constraints 
+ 
+ 
+
+Output Format
+
+For each test case, output a single line containing either "Yes" or "No" without the quotes.
+
+Sample Input
+
+2
+6
+4 3 2 1 3 4
+3
+1 3 2
+Sample Output
+
+Yes
+No
+Explanation
+
+In the first test case, pick in this order: left - , right - , left - , right - , left - , right - . 
+In the second test case, no order gives an appropriate arrangement of vertical cubes.  will always come after either  or .
+"""
+from collections import deque
+for _ in range(int(input())):
+    n, lst = int(input()),deque(map(int,input().split()))
+    for number in sorted(lst,reverse=True):
+        if number == lst[0]:
+            lst.popleft()
+        elif number == lst[-1]:
+            lst.pop()
+        else:
+            print("No")
+            break
+    else:
+        print("Yes")
+
+"""
+Most Common
+You are given a string . 
+The string contains only lowercase English alphabet characters.
+
+Your task is to find the top three most common characters in the string .
+
+Input Format
+
+A single line of input containing the string .
+
+Constraints
+
+
+Output Format
+
+Print the three most common characters along with their occurrence count each on a separate line.
+Sort output in descending order of occurrence count.
+If the occurrence count is the same, sort the characters in ascending order.
+
+Sample Input
+
+aabbbccde
+Sample Output
+
+b 3
+a 2
+c 2
+Explanation
+
+Here, b occurs  times. It is printed first.
+Both a and c occur  times. So, a is printed in the second line and c in the third line because a comes before c.
+
+Note: The string  has at least  distinct characters.
+"""
+
+
+from collections import Counter
+S = input().strip()
+dic = Counter(S)
+for n in sorted(dic.items(),key = lambda x: (-x[1], x[0]))[0:3]:       
+    print(" ".join(str(o) for o in n),sep=' ')
+
+
+
+
+
+
